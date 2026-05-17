@@ -96,11 +96,11 @@ def load_config(path):
     try:
         with open(path, "r") as f:
             first_line = f.readline()
-            return int(first_line.strip())
+            return int(first_line)
     except Exception as e:
-        raise RuntimeError("failed to load config") from e
+        raise RuntimeError(f"failed to load config from {e}")
 
-# load_config('')
+load_config('')
 
 
 
