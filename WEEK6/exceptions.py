@@ -28,6 +28,8 @@ def get_value(d, key):
         return d[key]
     except KeyError:
         return "Missing"
+# sas ={"a": 1}
+# print(get_value(sas, 'b'))
 
 #5
 def parse_ints(values):
@@ -51,7 +53,7 @@ def set_age(age):
     else:
         raise ValueError("Age must be between 0 and 150")
 
-print(set_age("shlomo"))
+# print(set_age(""))
 
 #7
 class InsufficientFundsError(Exception):
@@ -65,12 +67,16 @@ def withdraw(balance, amount):
 #8
 def retry(func, n):
     err = None
-    for _ in range(n):
-        try:
-            func()
-        except Exception as e:
-            err = e
-    raise err
+    try:
+        for _ in range(n):
+            try:
+                func()
+            except Exception as e:
+                err = e
+        raise err
+    except ValueError:
+        raise ValueError ("n must be number")
+
 
 
 #9
@@ -94,10 +100,7 @@ def load_config(path):
     except Exception as e:
         raise RuntimeError("failed to load config") from e
 
-
-
-
-
+# load_config('')
 
 
 
