@@ -67,11 +67,10 @@ def retry(func, n):
     err = None
     for _ in range(n):
         try:
-            return func()
+            func()
         except Exception as e:
             err = e
     raise err
-
 
 
 #9
@@ -89,14 +88,11 @@ def count_errors(funcs):
 #10
 def load_config(path):
     try:
-        with open(path, 'r') as f:
-            file = f.readlines()[0]
-            try:
-                file = int(file)
-            except ValueError:
-                file = None
-    except RuntimeError:
-        RuntimeError("failed to load config")
+        with open(path, "r") as f:
+            first_line = f.readline()
+            return int(first_line.strip())
+    except Exception as e:
+        raise RuntimeError("failed to load config") from e
 
 
 
