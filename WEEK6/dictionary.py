@@ -1,7 +1,6 @@
 #1
 from os import lseek
 
-
 def sum_values(dict):
     sum = 0
     for value in dict.values():
@@ -10,6 +9,7 @@ def sum_values(dict):
         except TypeError:
             pass
     return sum
+# print(sum_values({"a":1,"b":2}))
 
 #2
 def max_in_dict(dict):
