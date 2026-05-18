@@ -46,18 +46,21 @@ def swap_pairs(tpl):
     if len(tpl) % 2 == 1:
         swapped += (tpl[len(tpl) - 1],)
     return swapped
-#print(swap_pairs([1,2,3,4,5,6,7,8,9]))
+#print(swap_pairs((1,2,3,4,5,6,7,8,9)))
 
 #6
 def min_max(tpl):
     max ,min = tpl[0], tpl[0]
     for i in tpl:
-        if i > max:
-            max = i
-        elif i < min:
-            min = i
-    return max, min
-# print(min_max((1,2,3,4,5,6,7,8,9)))
+        try:
+            if i > max:
+                max = i
+            elif i < min:
+                min = i
+        except:
+            pass
+    return (max, min)
+print(min_max((1,2,'n')))
 
 #7
 import math
@@ -69,7 +72,6 @@ def distance(point1, point2):
 #8
 def merge_sort(tpl1, tpl2):
     return sorted(tpl1) + sorted(tpl2)
-
 
 
 #9
@@ -97,7 +99,7 @@ def rotate(tpl,k):
     for i in tpl[:-k]:
         left += (i,)
     return right + left
-print(rotate((1,2,3,4,5,6,7,8,9), 2))
+#print(rotate((1,2,3,4,5,6,7,8,9), 2))
 
 
 
