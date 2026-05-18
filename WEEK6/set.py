@@ -60,10 +60,16 @@ def pair_sum_exists(numbers,target):
         num_set.add(num)
     return False
     
-print(pair_sum_exists( [3, 1, 4, 7, 2], 10))
+# print(pair_sum_exists( [3, 1, 4, 7, 2], 10))
 
 #10
-    
+def only_in_one(lst1, lst2):
+    set1 = set(lst1)
+    set2 = set(lst2)
+    a = [i for i in lst1 if i not in set2]
+    b = [i for i in lst2 if i not in set1]
+    return a + b
+print(only_in_one([1, 2, 3, 4], [3, 4, 5, 6] ))
     
 
 
