@@ -98,15 +98,17 @@ def common_keys(dict1, dict2):
 #10
 def most_frequant_value(dict):
     frequancy_dict = {}
-    for k, v in dict.items():
+    for v in dict.values():
         if v in frequancy_dict:
             frequancy_dict[v] += 1
         else:
             frequancy_dict[v] = 1
     max_v = 0
-    for v in frequancy_dict.values():
-        if v > max_v:
-            max_v = frequancy_dict[v]
-    return max_v
-# print(most_frequant_value({"a": 1, "b": 2, "c": 1, "d": 3, "e": 1} ))
+    max_k = None
+    for v, k in frequancy_dict.items():
+        if k > max_v:
+            max_v = k
+            max_k = v
+    return max_k
+# print(most_frequant_value({"a": 1, "b": 2, "c": 1, "d": 3, "e": 1, 8 : 3, 'p' : 3, "op": 3 }))
 
