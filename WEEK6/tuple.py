@@ -71,7 +71,7 @@ def distance(point1, point2):
 
 #8
 def merge_sort(tpl1, tpl2):
-    return sorted(tpl1) + sorted(tpl2)
+    return (sorted(tpl1 + tpl2))
 
 
 #9
@@ -87,7 +87,7 @@ def frequency_table(tpl):
     for item in fltr:
         table += ((item,count_occurrences(tpl, item)))
     return table
-#print(frequency_table(('a','b','c','b','c','b','a','s','d','c','b','c','a')))
+print(frequency_table(('a','b','c','b','c','b','a','s','d','c','b','c','a')))
 
 #10
 def rotate(tpl,k):
