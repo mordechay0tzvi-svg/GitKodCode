@@ -1,6 +1,3 @@
-from redis.observability import attributes
-
-
 def add(a, b):
     return a + b
 
@@ -13,6 +10,7 @@ if __name__ == "__main__":
 from datetime import datetime as dt
 print(dt.now())
 
+
 import math as m
 def public_names(library):
     library_dir = dir(library)
@@ -23,15 +21,20 @@ def public_names(library):
     return attributes
 print(public_names(m))
 
-def add_item(item, bag):
+
+def add_item(item, bag=None):
+    bag = []
     bag.append(item)
     return bag
-print(add_item(3, [1,2]))
+print(add_item(3))
+print(add_item(3))
+print(add_item(3))
+
 
 
 
 from geometry.circle import area as carea
 from geometry.rectangle import area as rarea
 
-print(carea(7))
-print(rarea(6, 7))
+print(carea(5))
+print(rarea(4, 6))
