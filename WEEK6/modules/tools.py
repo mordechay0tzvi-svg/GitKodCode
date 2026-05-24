@@ -38,7 +38,7 @@ print(x)
 # print(list(range(5)))
 #list is used as an inter so function won't work
 
-
+x
 import math as m
 def public_names(library):
     library_dir = dir(library)
@@ -66,3 +66,4 @@ from geometry.rectangle import area as rarea
 
 print(carea(5))
 print(rarea(4, 6))
+
