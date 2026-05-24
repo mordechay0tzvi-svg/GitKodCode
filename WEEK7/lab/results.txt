@@ -1,0 +1,10 @@
+Avi: 97.66666666666667 
+MOMO: 91.66666666666667 
+Dan: 84.33333333333333 
+Yoni: 71.66666666666667 
+Sara: 66.66666666666667 
+======statistics===== 
+top score: ('Avi', 97.66666666666667) 
+lowest score: ('Sara', 66.66666666666667) 
+average: 82.4 
+passed: ['Dan', 'MOMO', 'Yoni', 'Avi', 'Sara'] 
