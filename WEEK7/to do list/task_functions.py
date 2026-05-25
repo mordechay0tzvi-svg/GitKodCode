@@ -2,6 +2,8 @@ def load_tasks(filename):
     try:
         with open(filename, 'r') as f:
             file = f.readlines()
+            if not file:
+                return []
             tasks = []
             for f in file:
                 id = f.split(" ")[0]
@@ -15,7 +17,7 @@ def load_tasks(filename):
             return tasks
     except FileNotFoundError:
         print("File not found")
-        return
+        return []
 
 def save_tasks(filename, tasks):
     try:
@@ -29,7 +31,6 @@ def save_tasks(filename, tasks):
         print(f"Error {e}")
 
 def add_task(filename, description):
-    try:
         tasks = load_tasks(filename)
         if not tasks:
             last_id = 0
@@ -38,8 +39,6 @@ def add_task(filename, description):
             last_id = int(tasks[-1]["id"])
         tasks.append({"id": f"{last_id + 1}", "status":"pending", "description":description})
         save_tasks(filename, tasks)
-    except Exception as e:
-        print(f"Error {e}")
 
 def complete_task(filename, task_id):
     try:
@@ -55,13 +54,11 @@ def complete_task(filename, task_id):
         print(f"Error {e}")
 
 def list_tasks(filename):
-    try:
         tasks = load_tasks(filename)
         if not tasks:
             print("no tasks yet")
             return
         for task in tasks:
             print(task)
-    except Exception as e:
-        print(f"Error {e}")
+
 
