@@ -18,38 +18,50 @@ def load_tasks(filename):
         return
 
 def save_tasks(filename, tasks):
-    with open(filename, 'w') as f:
-        for t in tasks:
-            task = ""
-            for k, v in t.items():
-                task += f"{k}:{v} "
-            f.write(task + "\n")
+    try:
+        with open(filename, 'w') as f:
+            for t in tasks:
+                task = ""
+                for k, v in t.items():
+                    task += f"{k}:{v} "
+                f.write(task + "\n")
+    except Exception as e:
+        print(f"Error {e}")
 
 def add_task(filename, description):
-    tasks = load_tasks(filename)
-    if not tasks:
-        last_id = 0
-        tasks = []
-    else:
-        last_id = int(tasks[-1]["id"])
-    tasks.append({"id": f"{last_id + 1}", "status":"pending", "description":description})
-    save_tasks(filename, tasks)
+    try:
+        tasks = load_tasks(filename)
+        if not tasks:
+            last_id = 0
+            tasks = []
+        else:
+            last_id = int(tasks[-1]["id"])
+        tasks.append({"id": f"{last_id + 1}", "status":"pending", "description":description})
+        save_tasks(filename, tasks)
+    except Exception as e:
+        print(f"Error {e}")
 
 def complete_task(filename, task_id):
-    tasks = load_tasks(filename)
-    for task in tasks:
-        if task["id"] == str(task_id):
-            task["status"] = "done"
-            save_tasks(filename, tasks)
-            return
-    print("task not found")
-    return
+    try:
+        tasks = load_tasks(filename)
+        for task in tasks:
+            if task["id"] == str(task_id):
+                task["status"] = "done"
+                save_tasks(filename, tasks)
+                return
+        print("task not found")
+        return
+    except Exception as e:
+        print(f"Error {e}")
 
 def list_tasks(filename):
-    tasks = load_tasks(filename)
-    if not tasks:
-        print("no tasks yet")
-        return
-    for task in tasks:
-        print(task)
+    try:
+        tasks = load_tasks(filename)
+        if not tasks:
+            print("no tasks yet")
+            return
+        for task in tasks:
+            print(task)
+    except Exception as e:
+        print(f"Error {e}")
 
