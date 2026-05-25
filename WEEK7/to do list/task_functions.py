@@ -13,11 +13,19 @@ def load_tasks(filename):
 
 def save_tasks(filename, tasks):
     with open(filename, 'w') as f:
-        f.write(tasks)
+        for t in tasks:
+            task = ""
+            for k, v in t.items():
+                task += f"{k}|{v}"
+            f.writelines(task)
 
 def add_task(filename, description):
     tasks = load_tasks(filename)
-    last_id = tasks[-1]["id"]
+    if not tasks:
+        last_id = 0
+        tasks = []
+    else:
+        last_id = tasks[-1]["id"]
     tasks.append({"id": last_id+1, "status":"pending", "description": description })
     save_tasks(filename, tasks)
 
@@ -32,5 +40,9 @@ def complete_task(filename, task_id):
 
 def list_tasks(filename):
     tasks = load_tasks(filename)
+    if not tasks:
+        print("no tasks yet")
+        return
     for task in tasks:
         print(task)
+
