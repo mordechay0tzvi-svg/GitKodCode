@@ -6,3 +6,6 @@ def load_tasks(filename):
         print("File not found")
         return None
 
+def save_tasks(filename, tasks):
+    with open(filename, 'w') as f:
+        f.write(tasks)
