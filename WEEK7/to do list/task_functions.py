@@ -6,9 +6,9 @@ def load_tasks(filename):
                 return []
             tasks = []
             for f in file:
-                id = f.split(" ")[0]
-                status = f.split(" ")[1]
-                description = f.split(" ")[2]
+                id = f.split("|")[0]
+                status = f.split("|")[1]
+                description = f.split("|")[2]
                 id = id.split(":")[1]
                 status = status.split(":")[1]
                 description = description.split(":")[1]
@@ -25,7 +25,7 @@ def save_tasks(filename, tasks):
             for t in tasks:
                 task = ""
                 for k, v in t.items():
-                    task += f"{k}:{v} "
+                    task += f"{k}:{v}|"
                 f.write(task + "\n")
     except Exception as e:
         print(f"Error {e}")
