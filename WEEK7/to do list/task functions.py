@@ -30,3 +30,7 @@ def complete_task(filename, task_id):
     print("task not found")
     return
 
+def list_tasks(filename):
+    tasks = load_tasks(filename)
+    for task in tasks:
+        print(task)
