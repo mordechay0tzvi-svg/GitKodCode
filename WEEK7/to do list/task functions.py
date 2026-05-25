@@ -9,7 +9,7 @@ def load_tasks(filename):
             return tasks
     except FileNotFoundError:
         print("File not found")
-        return None
+        return
 
 def save_tasks(filename, tasks):
     with open(filename, 'w') as f:
@@ -20,4 +20,13 @@ def add_task(filename, description):
     last_id = tasks[-1]["id"]
     tasks.append({"id": last_id+1, "status":"pending", "description": description })
     save_tasks(filename, tasks)
+
+def complete_task(filename, task_id):
+    tasks = load_tasks(filename)
+    for task in tasks:
+        if task["id"] == task_id:
+            task["status"] = "done"
+            return
+    print("task not found")
+    return
 
