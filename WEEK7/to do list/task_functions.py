@@ -4,7 +4,13 @@ def load_tasks(filename):
             file = f.readlines()
             tasks = []
             for f in file:
-                task = {"id":f.split("|")[0], "status":f.split("|")[1], "description":f.split("|")[2]}
+                id = f.split(" ")[0]
+                status = f.split(" ")[1]
+                description = f.split(" ")[2]
+                id = id.split(":")[1]
+                status = status.split(":")[1]
+                description = description.split(":")[1]
+                task = {"id":id, "status":status, "description":description}
                 tasks.append(task)
             return tasks
     except FileNotFoundError:
@@ -16,8 +22,8 @@ def save_tasks(filename, tasks):
         for t in tasks:
             task = ""
             for k, v in t.items():
-                task += f"{k}|{v}"
-            f.writelines(task)
+                task += f"{k}:{v} "
+            f.write(task + "\n")
 
 def add_task(filename, description):
     tasks = load_tasks(filename)
@@ -25,15 +31,16 @@ def add_task(filename, description):
         last_id = 0
         tasks = []
     else:
-        last_id = tasks[-1]["id"]
-    tasks.append({"id": last_id+1, "status":"pending", "description": description })
+        last_id = int(tasks[-1]["id"])
+    tasks.append({"id": f"{last_id + 1}", "status":"pending", "description":description})
     save_tasks(filename, tasks)
 
 def complete_task(filename, task_id):
     tasks = load_tasks(filename)
     for task in tasks:
-        if task["id"] == task_id:
+        if task["id"] == str(task_id):
             task["status"] = "done"
+            save_tasks(filename, tasks)
             return
     print("task not found")
     return
