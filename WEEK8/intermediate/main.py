@@ -18,20 +18,23 @@ def user_id(user_id):
 
 @app.get("/calc/{a}/{op}/{b}")
 def calc_op(a:int, op:str, b:int):
-    if op == "add":
-        r = a + b
-        return {"operation": op, "result": r}
-    elif op == "sub":
-        r = a - b
-        return {"operation": op, "result": r}
-    elif op == "mult":
-        r = a * b
-        return {"operation": op, "result": r}
-    elif op == "div":
-        r = a / b
-        return {"operation": op, "result": r}
-    else:
-        return {"operation failed due to":"invalid oparator"}
+    try:
+        if op == "add":
+            r = a + b
+            return {"operation": op, "result": r}
+        elif op == "sub":
+            r = a - b
+            return {"operation": op, "result": r}
+        elif op == "mult":
+            r = a * b
+            return {"operation": op, "result": r}
+        elif op == "div":
+            r = a / b
+            return {"operation": op, "result": r}
+        else:
+            return {"operation failed due to":"invalid oparator"}
+    except Exception as e:
+        return {"Error":e}
 
 @app.get("/status")
 def status():

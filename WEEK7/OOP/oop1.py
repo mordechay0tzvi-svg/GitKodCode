@@ -24,7 +24,7 @@ class Counter:
 c = Counter()
 c.increment()
 c.increment()
-# print(c.value())
+print(c.value())
 
 class Point:
     def __init__(self,x,y):
