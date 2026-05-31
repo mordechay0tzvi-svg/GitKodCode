@@ -15,11 +15,16 @@ def test_calc_op():
     r = requests.get("http://localhost:8008/calc/8/div/2")
     print(r.json())
 
+def test_status():
+    r = requests.get("http://localhost:8008/status")
+    print(r.json())
+
 def main():
     test_initial_get()
     test_user_id("test_id")
     test_users_admin()
     test_calc_op()
+    test_status()
 
 
 if __name__ == "__main__":

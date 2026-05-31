@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 import uvicorn
-
+from datetime import datetime
 app = FastAPI()
 
 @app.get("/")
@@ -33,7 +33,9 @@ def calc_op(a:int, op:str, b:int):
     else:
         return {"operation failed due to":"invalid oparator"}
 
-
+@app.get("/status")
+def status():
+    return {"time":datetime.now(), "server":"MyServer on port: 8008"}
 
 
 if __name__ == "__main__":
