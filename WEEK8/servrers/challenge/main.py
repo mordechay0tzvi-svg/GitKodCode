@@ -14,7 +14,7 @@ def students():
 
 @app.get("/students/top")
 def top():
-    return {"max score":(max(grades.values(), key=lambda x: x["grade"])["name"])}
+    return {"max score":(max(grades.values(), key=lambda student: student["grade"])["name"])}
 
 @app.get("/students/average")
 def average():
@@ -30,3 +30,6 @@ def student(student_id):
 
 if __name__ == "__main__":
     uvicorn.run(app, host="localhost", port = 8008)
+
+
+
