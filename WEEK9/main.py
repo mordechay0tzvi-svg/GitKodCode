@@ -45,9 +45,9 @@ def delete_soldier(id):
     return {"message": f"{deleted} Deleted"}
 
 @app.put("/soldiers/{id}")
-def edit_soldier(soldier_id: int, body: SoldierIn):
+def edit_soldier(id: int, body: Soldier):
     data = body.model_dump(exclude_none=True)
-    success = db.update(soldier_id, data)
+    success = db.update(id, data)
     if not success:
         raise HTTPException(status_code=404, detail="Soldier not found")
     return {"message": "Updated"}

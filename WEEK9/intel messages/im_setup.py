@@ -1,6 +1,6 @@
 import mysql.connector
 im_db =  mysql.connector.connect(host="localhost",
-                                 port=8000,
+                                 port=3306,
                                  user='root',
                                  password='secret',
                                  database="soldiers_db")

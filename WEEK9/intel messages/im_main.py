@@ -17,6 +17,8 @@ def schema():
 def messages():
     return {"messages": im_db.get_all_messages()}
 
+
+
 if __name__=="__main__":
     uvicorn.run(app, host="localhost", port=8000)
 
