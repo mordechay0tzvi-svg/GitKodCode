@@ -22,7 +22,7 @@ def get_schema():
 
 @app.get("/soldiers")
 def get_all_soldiers():
-    return db.get_all()
+    return {"soldiers": db.get_all()}
 
 @app.get("/soldiers/{id}")
 def get_soldier(id:int):
@@ -44,6 +44,13 @@ def delete_soldier(id):
         raise HTTPException(status_code=404, detail="Soldier not found")
     return {"message": f"{deleted} Deleted"}
 
+@app.put("/soldiers/{id}")
+def edit_soldier(soldier_id: int, body: SoldierIn):
+    data = body.model_dump(exclude_none=True)
+    success = db.update(soldier_id, data)
+    if not success:
+        raise HTTPException(status_code=404, detail="Soldier not found")
+    return {"message": "Updated"}
 
 
 if __name__ == "__main__":

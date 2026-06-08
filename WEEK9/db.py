@@ -49,8 +49,19 @@ def create(name: str, ranking: str, unit: str, active=True):
     conn.close()
     return new_id
 
-def update(id, data):
-    pass
+def update(soldier_id: int, data: dict) -> bool:
+    conn = get_connection()
+    cursor = conn.cursor()
+    set_parts = [f"{key} = %s" for key in data.keys()]
+    set_clause = ", ".join(set_parts)
+    sql = f"UPDATE soldiers SET {set_clause} WHERE id = %s"
+    values = list(data.values()) + [soldier_id]
+    cursor.execute(sql, values)
+    conn.commit()
+    changed = cursor.rowcount > 0 
+    cursor.close()
+    conn.close()
+    return changed
 
 def delete(id):
     conn = get_connection()
