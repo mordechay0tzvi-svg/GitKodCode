@@ -60,7 +60,7 @@ def delete(id):
     deleted = cursor.rowcount > 0
     cursor.close()
     conn.close()
-    return "deleted"
+    return deleted
 
 
 

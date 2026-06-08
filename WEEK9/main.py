@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Body
+from fastapi import FastAPI, Body, HTTPException
 import db
 import uvicorn
 from pydantic import BaseModel
@@ -26,12 +26,25 @@ def get_all_soldiers():
 
 @app.get("/soldiers/{id}")
 def get_soldier(id:int):
-    return db.get_by_id(id)
+    soldier = db.get_by_id(id)
+    if not soldier:
+        raise HTTPException(status_code=404, detail="soldier not found")
+    return soldier
 
 @app.post("/create")
 def add_soldier(data:Soldier):
     data = data.model_dump()
-    return db.create(**data)
+    new_id = db.create(**data)
+    return {"id":new_id, "message":"soldier created"}
+
+@app.delete("soldiers/{id}")
+def delete_soldier(id):
+    deleted = db.delete(id)
+    if not deleted:
+        raise HTTPException(status_code=404, detail="Soldier not found")
+    return {"message": f"{deleted} Deleted"}
+
+
 
 if __name__ == "__main__":
     uvicorn.run(app, host="localhost", port=8000)
