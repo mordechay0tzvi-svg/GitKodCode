@@ -8,6 +8,13 @@ def get_connection():
         password="secret",
         database="soldiers_db")
 
+def is_valid_classification():
+    im_db = get_connection()
+    cursor = im_db.cursor()
+    cursor.execute("SHOW COLUMNS FROM intelmessages LIKE 'classification'")
+    column_info = cursor.fetchone()
+    return column_info
+
 def get_schema() -> list:
     im_db = get_connection()
     cursor = im_db.cursor()
@@ -29,7 +36,7 @@ def get_all_messages():
 def add_message(unit:str, classification:str, content:str, source:str):
     im_db = get_connection()
     cursor = im_db.cursor()
-    command = "INSERT INTO intelmessages (unit, classification, content, scource) VALUES (%s, %s, %s, %s)"
+    command = "INSERT INTO intelmessages (unit, classification, content, source) VALUES (%s, %s, %s, %s)"
     values = (unit, classification, content, source)
     cursor.execute(command, values)
     im_db.commit()
