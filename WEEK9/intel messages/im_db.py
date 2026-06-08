@@ -68,7 +68,7 @@ def update_message(id, data):
 
 def get_message(id):
     im_db = get_connection()
-    cursor = im_db.cursor()
+    cursor = im_db.cursor(dictionary=True)
     cursor.execute("SELECT * FROM intelmessages WHERE id = %s", (id,))
     row = cursor.fetchone()
     cursor.close()
