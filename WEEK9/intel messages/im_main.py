@@ -52,6 +52,13 @@ def update(id:int, data:dict):
         raise HTTPException(status_code=404, detail="message not found")
     return {updated:"updaated"}
 
+@app.get("/messages/units/{unit}")
+def unit_messages(unit:str):
+    messages = im_db.get_by_unit(unit)
+    if not messages:
+        raise HTTPException(status_code=404, detail="unit not found")
+    return messages
+
 if __name__=="__main__":
     uvicorn.run(app, host="localhost", port=8000)
 

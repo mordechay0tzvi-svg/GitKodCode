@@ -76,4 +76,14 @@ def get_message(id):
     return row
 
 
+def get_by_unit(unit:str):
+    im_db = get_connection()
+    cursor = im_db.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM intelmessages WHERE unit = %s", (unit,))
+    rows = cursor.fetchall()
+    cursor.close()
+    im_db.close()
+    return rows
+
+
 
