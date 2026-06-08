@@ -20,18 +20,17 @@ def get_schema() -> list:
 def get_all_messages():
     im_db = get_connection()
     cursor = im_db.cursor(dictionary=True)
-    cursor.execute("SELET * FROM intelmessages")
-    im_db.commit()
+    cursor.execute("SELECT * FROM intelmessages")
     rows = cursor.fetchall()
     cursor.close()
     im_db.close()
     return rows
 
-def add_message(unit:str, classification:str, content:str, scource:str):
+def add_message(unit:str, classification:str, content:str, source:str):
     im_db = get_connection()
     cursor = im_db.cursor()
     command = "INSERT INTO intelmessages (unit, classification, content, scource) VALUES (%s, %s, %s, %s)"
-    values = (unit, classification, content, scource)
+    values = (unit, classification, content, source)
     cursor.execute(command, values)
     im_db.commit()
     cursor.close()
@@ -41,7 +40,7 @@ def add_message(unit:str, classification:str, content:str, scource:str):
 def delete_message(id):
     im_db = get_connection()
     cursor = im_db.cursor()
-    cursor.execute("DELETE FROM intelmessages WHERE id  =%s" ,(id))
+    cursor.execute("DELETE FROM intelmessages WHERE id = %s" ,(id,))
     im_db.commit()
     deleted = cursor.rowcount > 0
     cursor.close()
@@ -51,7 +50,7 @@ def delete_message(id):
 def update_message(id, data):
     im_db = get_connection()
     cursor = im_db.cursor()
-    query = "UPDATE intelmessages SET classification = %s, content = %sWHERE id = %s"
+    query = "UPDATE intelmessages SET classification = %s, content = %s WHERE id = %s"
     values = (data["classification"],data["content"],id)
     cursor.execute(query, values)
     im_db.commit()
@@ -63,8 +62,7 @@ def update_message(id, data):
 def get_message(id):
     im_db = get_connection()
     cursor = im_db.cursor()
-    cursor.execute("SELECT * FROM soldiers WHERE id = %s", (id,))
-    im_db.commit()
+    cursor.execute("SELECT * FROM intelmessages WHERE id = %s", (id,))
     row = cursor.fetchone()
     cursor.close()
     im_db.close()

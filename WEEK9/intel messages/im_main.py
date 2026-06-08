@@ -25,25 +25,26 @@ def messages():
 
 @app.post("/messages")
 def add_message(data:Message):
-    return im_db.add_message(**data)
+    data = data.model_dump()
+    return {"message":im_db.add_message(**data)}
 
 @app.get("/messages/{id}")
-def get_by_id(id):
+def get_by_id(id:int):
     if not im_db.get_message(id):
         raise HTTPException(status_code=404, detail="message not found")
     return im_db.get_message(id)
 
 @app.delete("/messages/{id}")
-def delete(id):
+def delete(id:int):
     if not im_db.delete_message(id):
         raise HTTPException(status_code=404, detail="message not found")
     return im_db.delete_message(id)
 
 @app.put("/messages/{id}")
-def get_by_id(id:int, data:dict):
+def update(id:int, data:dict):
     if not im_db.update_message(id, data):
         raise HTTPException(status_code=404, detail="message not found")
-    return im_db.update_message(id)
+    return im_db.update_message(id, data)
 
 if __name__=="__main__":
     uvicorn.run(app, host="localhost", port=8000)
