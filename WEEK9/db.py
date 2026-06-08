@@ -3,7 +3,7 @@ import mysql.connector
 def get_connection():
     return mysql.connector.connect(
     host="localhost",
-    port=8000,
+    port=3306,
     user="root",
     password="secret",
     database="soldiers_db"
@@ -53,7 +53,15 @@ def update(id, data):
     pass
 
 def delete(id):
-    pass
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM soldiers WHERE id = %s", (id,))
+    conn.commit()
+    deleted = cursor.rowcount > 0
+    cursor.close()
+    conn.close()
+    return "deleted"
+
 
 
 

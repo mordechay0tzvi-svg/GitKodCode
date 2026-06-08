@@ -1,0 +1,3 @@
+docker exec -it 8ec8e91bca1a /bin/bash
+mysql -u root -p
+secret
