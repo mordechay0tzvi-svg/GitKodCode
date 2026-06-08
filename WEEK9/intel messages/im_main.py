@@ -17,7 +17,9 @@ def schema():
 def messages():
     return {"messages": im_db.get_all_messages()}
 
-
+@app.get("/messages/{id}")
+def get_by_id(id):
+    if not im_db.ge
 
 if __name__=="__main__":
     uvicorn.run(app, host="localhost", port=8000)

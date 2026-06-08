@@ -21,6 +21,7 @@ def get_all_messages():
     im_db = get_connection()
     cursor = im_db.cursor(dictionary=True)
     cursor.execute("SELET * FROM intelmessages")
+    im_db.commit()
     rows = cursor.fetchall()
     cursor.close()
     im_db.close()
@@ -32,6 +33,7 @@ def add_message(unit:str, classification:str, content:str, scource:str):
     command = "INSERT INTO intelmessages (unit, classification, content, scource) VALUES (%s, %s, %s, %s)"
     values = (unit, classification, content, scource)
     cursor.execute(command, values)
+    im_db.commit()
     cursor.close()
     im_db.close()
     return "messgae added"
@@ -40,22 +42,29 @@ def delete_message(id):
     im_db = get_connection()
     cursor = im_db.cursor()
     cursor.execute("DELETE FROM intelmessages WHERE id  =%s" ,(id))
+    im_db.commit()
+    deleted = cursor.rowcount > 0
     cursor.close()
     im_db.close()
-    return "messgae deleted"
+    return deleted
 
 def update_message(id, data):
     im_db = get_connection()
     cursor = im_db.cursor()
-    cursor.execute("SELECT FROM intelmessages WHERE id  =%s" ,(id))
+    query = "UPDATE intelmessages SET classification = %s, content = %sWHERE id = %s"
+    values = (data["classification"],data["content"],id)
+    cursor.execute(query, values)
+    im_db.commit()
+    changed = cursor.rowcount > 0
     cursor.close()
     im_db.close()
-    return "messgae updated"
+    return changed
 
-def message_by_id(id):
+def get_message(id):
     im_db = get_connection()
     cursor = im_db.cursor()
     cursor.execute("SELECT * FROM soldiers WHERE id = %s", (id,))
+    im_db.commit()
     row = cursor.fetchone()
     cursor.close()
     im_db.close()

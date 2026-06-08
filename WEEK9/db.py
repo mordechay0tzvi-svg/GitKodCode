@@ -49,6 +49,7 @@ def create(name: str, ranking: str, unit: str, active=True):
     conn.close()
     return new_id
 
+
 def update(soldier_id: int, data: dict) -> bool:
     conn = get_connection()
     cursor = conn.cursor()
