@@ -40,8 +40,14 @@ def get_by_id(id)-> dict | None:
 def create(name: str, ranking: str, unit: str, active=True):
     conn = get_connection()
     cursor = conn.cursor()
-    command = "INSERT INTO soldiers (name, ranking )"
-    cursor.execute()
+    command = "INSERT INTO soldiers (name, ranking, unit, active) VALUES (%s, %s, %s, %s)"
+    values = (name, ranking, unit, active)
+    cursor.execute(command, values)
+    conn.commit()
+    new_id = cursor.lastrowid 
+    cursor.close()
+    conn.close()
+    return new_id
 
 def update(id, data):
     pass
