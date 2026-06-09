@@ -121,6 +121,11 @@ def search_by_name(name:str):
     conn.close()
     return names
 
-
-
-
+def get_with_missing_rank() -> list:
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM soldiers WHERE rank IS NULL")
+    not_ranked = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return not_ranked
