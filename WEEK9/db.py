@@ -77,7 +77,7 @@ def delete(id):
 def get_names_and_ranks() -> list:
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT name, rank FROM soldiers")
+    cursor.execute("SELECT id, name, ranking FROM soldiers")
     rows = cursor.fetchall()
     cursor.close()
     conn.close()
