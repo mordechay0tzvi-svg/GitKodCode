@@ -8,13 +8,6 @@ def get_connection():
         password="secret",
         database="soldiers_db")
 
-# def is_valid_classification():
-#     im_db = get_connection()
-#     cursor = im_db.cursor()
-#     cursor.execute("SHOW COLUMNS FROM intelmessages LIKE 'classification'")
-#     column_info = cursor.fetchone()
-#     return column_info[0]
-
 def get_schema() -> list:
     im_db = get_connection()
     cursor = im_db.cursor()
@@ -84,4 +77,7 @@ def get_by_unit(unit:str):
     cursor.close()
     im_db.close()
     return rows
+
+
+
 

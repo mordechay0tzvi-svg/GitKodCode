@@ -74,6 +74,53 @@ def delete(id):
     conn.close()
     return deleted
 
+def get_names_and_ranks() -> list:
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT name, rank FROM soldiers")
+    rows = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return rows
+
+def get_by_rank(rank: str) -> list:
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM soldiers WHERE ranking = %s",(rank,))
+    in_rank = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return in_rank
+
+def get_active(sort:str):
+    if sort.lower() not in ['asc', 'desc']:
+        sort = "asc"
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute(f"SELECT * FROM soldiers WHERE active ORDER BY name {sort.upper()}")
+    rows = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return rows
+
+def distinct_units():
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT DISTINCT unit FROM soldiers")
+    units = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return [unit[0] for unit in units]
+
+def search_by_name(name:str):
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM soldiers WHERE name LIKE %s",(f"%{name}%",))
+    names = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return names
+
 
 
 
