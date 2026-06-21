@@ -2,6 +2,7 @@ from fastapi import FastAPI, Body, HTTPException, Query
 import db
 import uvicorn
 from pydantic import BaseModel
+import reports
 
 class Soldier(BaseModel):
     name:str
@@ -49,6 +50,10 @@ def list_units():
 def search(name:str=Query(...)):
     return {"soldiers": db.search_by_name(name)}
 
+@app.get("/soldiers/missing-rank")
+def rankless():
+    return {"unranked soldiers":reports.get_missing_data()}
+
 @app.put("/soldiers/{id}")
 def edit_soldier(id: int, body: Soldier):
     data = body.model_dump(exclude_none=True)
@@ -71,5 +76,15 @@ def get_soldier(id:int):
         raise HTTPException(status_code=404, detail="soldier not found")
     return soldier
 
+
+@app.get ("/stats/units")
+def stats_by_unit():
+    return{"by_unit":reports.count_by_unit()}
+
+@app.get("/stats/summary")
+def stats_summary():
+    return reports.get_summary()
+
 if __name__ == "__main__":
     uvicorn.run(app, host="localhost", port=8000)
+
