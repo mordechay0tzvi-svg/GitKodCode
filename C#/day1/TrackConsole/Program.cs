@@ -4,11 +4,11 @@
     {
         static void Main()
         {
-            
-            string raw = "start"
+
+            string raw = "start";
             while (!int.TryParse(raw, out int id))
             {
-                if (!raw == "start")
+                if (raw != "start")
                 {
                     Console.Write("Enter Track ID:");
                 }
@@ -18,10 +18,10 @@
                 
             }
 
-            raw = "start"
+            raw = "start";
             while (!int.TryParse(raw, out int speed))
             {
-                if (!raw == "start")
+                if (raw != "start")
                 {
                     Console.WriteLine("Speed must be a number");
                 }
@@ -30,10 +30,10 @@
             }
 
 
-            raw = "start"
+            raw = "start";
             while (!int.TryParse(raw, out int direction))
             {
-                if (!raw == "start")
+                if (!raw != "start")
                 {
                     Console.WriteLine("Direction must be a number");
                 }
