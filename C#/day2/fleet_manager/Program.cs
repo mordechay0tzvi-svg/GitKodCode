@@ -30,8 +30,8 @@
             int index = tracksIds.IndexOf(id);
             if (index < 0) 
                 return " ";
-            string track = $"ID: {tracksIds[index]}";
-            track += $"speed: {speeds[index]}";
+            string track = $"ID: {tracksIds[index]} | ";
+            track += $"speed: {speeds[index]} | ";
             track += $"direction: {heading[index]}";
             return track;
         }
@@ -75,6 +75,28 @@
                 Console.WriteLine(list[i]);
         }
 
+        static double DoubleParse()
+        {
+            double value;
+            while(!double.TryParse(Console.ReadLine(), out value))
+                Console.WriteLine("Must be double!, try again!");
+            return value;
+        }
+
+        static int IntParse(bool angle = false)
+        {
+            int value;
+            while (!int.TryParse(Console.ReadLine(), out value) || (angle && (value < 0 || value > 359)))
+            {
+                if (!angle)
+                    Console.WriteLine("Must be 1-12");
+                else
+                    Console.WriteLine("Must be 0-360!");
+            }
+                           
+            return value;
+        }
+
         static void Main()
         {
             while (true)
@@ -90,7 +112,7 @@
                 switch (choice)
                 {
                     default:
-                        Console.WriteLine("Invalid optiop");
+                        Console.WriteLine("Invalid option!");
                         continue;
                     case "1":
                         {                         
@@ -98,9 +120,9 @@
                         Console.WriteLine("Enter ID:");
                         string track_id = Console.ReadLine();
                         Console.WriteLine("Enter speed:");
-                        double.TryParse(Console.ReadLine(), out double speed);
+                        double speed = DoubleParse();
                         Console.WriteLine("Enter direction:");
-                        int.TryParse(Console.ReadLine(), out int angle);
+                        int angle = IntParse(true);
                         AddTrack(track_id, speed, angle);
                         break;
                         }
@@ -112,9 +134,9 @@
                             string track_id = Console.ReadLine();
                             bool removed = RemoveTrackById(track_id);
                             if (removed) 
-                                Console.WriteLine("Track removed");
+                                Console.WriteLine("Track removed.");
                             else 
-                                Console.WriteLine("Track not found");
+                                Console.WriteLine("Track not found.");
                             break;
                         }
 
@@ -125,7 +147,7 @@
                         string track_id = Console.ReadLine();
                         string track = FindTrackById(track_id);
                         if (track == " ") 
-                            Console.WriteLine("Track not found");
+                            Console.WriteLine("Track not found.");
                         else 
                             Console.WriteLine(track);
                         break;
@@ -137,29 +159,30 @@
                             break;
                         }
                         
-
                     case "5":
                         { 
-                        Console.WriteLine("1. Filter by threshold");
-                        Console.WriteLine("2. Filter by clockwise direction");
+                        Console.WriteLine("1. Filter by threshold.");
+                        Console.WriteLine("2. Filter by clockwise direction.");
                         string filtration = Console.ReadLine();
                         if (filtration == "1")
                         {
                             Console.WriteLine("Enter threshold:");
-                            double.TryParse(Console.ReadLine(), out double filter);
+                            double filter = DoubleParse();
                             PrintList(Filter(filter));
                         }
                         else if (filtration == "2")
                         {
-                            Console.WriteLine("Enter diraction:");
-                            int.TryParse(Console.ReadLine(), out int filter);
+                            Console.WriteLine("Enter clockwise direction:");
+                            int filter = IntParse();
+                            if (filter < 0 || filter > 11)
+                                filter = IntParse();
                             PrintList(Filter(filter));
                         }
                         break;
                         }
                     case "6":
                         { 
-                        Console.WriteLine("Goodbye");
+                        Console.WriteLine("Goodbye.");
                         return;
                         }
 
