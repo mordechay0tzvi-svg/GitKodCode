@@ -65,7 +65,8 @@
                 string line = "";
                 line += $"ID: {sourceId[i]} | ";
                 line += $"Dlassification: {classification[i]} | ";
-                line += $"Signal: {strength[i]} | ";
+                if (strength[i] == null) { line += "unknown"; }
+                else { line += $"Signal: {strength[i]} | "; }
                 Console.WriteLine(line);
             }
         }
@@ -112,11 +113,8 @@
                         Console.WriteLine("Invalid option");
                         break;
                 }
-
-
-
             }
 
-            }
         }
     }
+}
