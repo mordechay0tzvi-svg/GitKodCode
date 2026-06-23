@@ -15,19 +15,19 @@ namespace ind3
             int id;
             while (!int.TryParse(Console.ReadLine(), out id)
             {
-                Console.WriteLine("Source id must be a number!")
+                Console.WriteLine("Try again, Source id must be a number!")
             }
             Console.WriteLine("Enter classification:");
             Cls clsf;
             while (!Cls.TryParse(Console.ReadLine(), out clsf)
             {
-                Console.WriteLine("Classification must be in {Friendly, Hostile, Unidentified}!")
+                Console.WriteLine("Try again, Classification must be in {Friendly, Hostile, Unidentified}!")
             }
             Console.WriteLine("Enter strength:");
             double? hertz;
             while (!double.TryParse(Console.ReadLine(), out hertz)
             {
-                Console.WriteLine("Strength must be number!")
+                Console.WriteLine("Try again, Strength must be number!")
             }
 
         }
