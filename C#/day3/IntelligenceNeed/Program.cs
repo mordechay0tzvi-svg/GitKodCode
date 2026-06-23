@@ -1,13 +1,10 @@
 ﻿namespace ind3
 {
+    enum ClsType { Friendly, Hostile, Unidentified }
     class In
     { 
-        enum ClsType {Friendly, Hostile, Unidentified}
-        static List <int> sourceId = new();
-        static List<ClsType> classification = new();
-        static List<double?> strength = new();
-
-        static void AddNewLog()
+        
+        static void AddNewLog(List<int> sourceId, List<ClsType> classification, List<double?> strength)
         {
             Console.WriteLine("Enter source id:");
             int id;
@@ -46,7 +43,7 @@
             hertz = calibrated_hertz;
         }
 
-        static void Calibrate(int id)
+        static void Calibrate(int id, List<int> sourceId, List<double?> strength)
         {
             int index = sourceId.IndexOf(id);
             if (index < 0) 
@@ -61,7 +58,7 @@
         }
 
 
-        static void ShowAll()
+        static void ShowAll(List<int> sourceId, List<ClsType> classification, List<double?> strength)
         {
             for (int i = 0; i < sourceId.Count; i++)
             {
@@ -75,6 +72,10 @@
 
         static void Main()
         {
+            List<int> sourceId = new();
+            List<ClsType> classification = new();
+            List<double?> strength = new();
+
             while (true)
             {
                 Console.WriteLine("===Signal Intercept Log===");
@@ -86,7 +87,7 @@
                 switch (choice)
                 {
                     case "1":
-                        AddNewLog();
+                        AddNewLog(sourceId, classification, strength);
                         break;
 
                     case "2":
@@ -96,11 +97,11 @@
                         {
                             Console.WriteLine("Try again, Source id must be a number!");
                         }
-                        Calibrate(id);
+                        Calibrate(id, sourceId, strength);
                         break;
 
                     case "3":
-                        ShowAll();
+                        ShowAll(sourceId, classification, strength);
                         break;
 
                     case "4":
