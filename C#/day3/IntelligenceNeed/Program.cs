@@ -3,7 +3,6 @@
     enum ClsType { Friendly, Hostile, Unidentified }
     class In
     { 
-        
         static void AddNewLog(List<int> sourceId, List<ClsType> classification, List<double?> strength)
         {
             Console.WriteLine("Enter source id:");
@@ -114,7 +113,6 @@
                         break;
                 }
             }
-
         }
     }
 }
