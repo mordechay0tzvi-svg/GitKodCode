@@ -1,54 +1,77 @@
-﻿using System.ComponentModel;
-
-namespace ind3
+﻿namespace ind3
 {
     class In
     { 
-        enum Cls {Friendly, Hostile, Unidentified}
-        List <int> sourceId = new();
-        List<Cls> classification = new();
-        List <double?> strength = new();
+        enum ClsType {Friendly, Hostile, Unidentified}
+        static List <int> sourceId = new();
+        static List<ClsType> classification = new();
+        static List<double?> strength = new();
 
         static void AddNewLog()
         {
             Console.WriteLine("Enter source id:");
             int id;
-            while (!int.TryParse(Console.ReadLine(), out id)
+            while (!int.TryParse(Console.ReadLine(), out id))
             {
-                Console.WriteLine("Try again, Source id must be a number!")
+                Console.WriteLine("Try again, Source id must be a number!");
             }
             Console.WriteLine("Enter classification:");
-            Cls clsf;
-            while (!Cls.TryParse(Console.ReadLine(), out clsf)
+            ClsType clsf;
+            while (!Enum.TryParse<ClsType>(Console.ReadLine(), out clsf))
             {
-                Console.WriteLine("Try again, Classification must be in {Friendly, Hostile, Unidentified}!")
+                Console.WriteLine("Try again, Classification must be in {Friendly, Hostile, Unidentified}!");
             }
             Console.WriteLine("Enter strength:");
             double? hertz;
-            while (!double.TryParse(Console.ReadLine(), out hertz)
+            if (double.TryParse(Console.ReadLine(), out double hertzAttempt))
             {
-                Console.WriteLine("Try again, Strength must be number!")
+                hertz = hertzAttempt;
             }
-
+            else
+            {
+                hertz = null;
+            }               
+            sourceId.Add(id);
+            classification.Add(clsf);
+            strength.Add(hertz);
         }
-        
+
+        static void CalibrateStrength(ref double? hertz)
+        {
+            Console.WriteLine("Insert calibrated megaHertz:");
+            double calibrated_hertz;
+            if (double.TryParse(Console.ReadLine(), out calibrated_hertz))
+                {hertz = calibrated_hertz; }
+            else { hertz = null; }
+            hertz = calibrated_hertz;
+        }
+
+        static void Calibrate(int id)
+        {
+            int index = sourceId.IndexOf(id);
+            if (index < 0) { Console.WriteLine("id not found!"); }
+            double? hertz = strength[index];
+            CalibrateStrength(ref hertz);
+            strength[index] = hertz;
+            Console.WriteLine("Strength calibrated");
+        }
 
 
-
-
-
-
-
-
-
-
-
-
-
+        static void SHowAll()
+        {
+            for (int i = 0; i < sourceId.Count; i++)
+            {
+                string line = "";
+                line += $"ID: {sourceId[i]} | ";
+                line += $"Dlassification: {classification[i]} | ";
+                line += $"Signal: {strength[i]} | ";
+                Console.WriteLine(line);
+            }
+        }
 
         static void Main()
         {
-
+            
         }
     }
 }
