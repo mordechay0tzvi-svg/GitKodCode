@@ -24,9 +24,11 @@
     private string _accountType { get; set; }
     public string AccountType
     {
+        
         get => _accountType;
         set
-        {if (!new[] { "Savings", "Checking", "Business" }.Contains(value)){ value = "Checking"; }
+        {string normal = char.ToUpper(value[0]) + value.Substring(1).ToLower();
+        if (!new[] { "Savings", "Checking", "Business" }.Contains(normal)){ _accountType = "Checking"; }
         else { _accountType = value; } }
     }
 
@@ -50,15 +52,14 @@
 
     public void Deposit(double amount)
     {
-        if (!IsActive) { Console.WriteLine("Deative account cannot deposit"); }
+        if (!IsActive) { Console.WriteLine("Deative account cannot deposit"); return; }
         if (amount <=  0) { Console.WriteLine("Must deposit more than zero"); return; }
         Balance += amount; _transactionHistory.Add($"Depositing ${amount} to account {AccountNumber}");
     }
 
-
     public bool Withdraw(double amount) 
     {
-        if (!IsActive) { Console.WriteLine("Deative account cannot withdrow"); }
+        if (!IsActive) { Console.WriteLine("Deative account cannot withdrow"); return false; }
         if (amount <= 0) { Console.WriteLine("Must Withdraw more than zero"); return false; }
         if (amount > Balance) { Console.WriteLine("Not enough credit"); return false; }
         Balance -= amount; _transactionHistory.Add($"Withdrowing ${amount} from account {AccountNumber}"); return true;
@@ -71,18 +72,38 @@
 
     public void PrintTransactionHistory() { foreach (string t in _transactionHistory) { Console.WriteLine(t); } }
 
-
+    public static bool Transfer(BankAccount from, BankAccount to, double amount)
+    {
+        if (from.Withdraw(amount)) { to.Deposit(amount); return true; }
+        Console.WriteLine("Transfer failed");
+        return false;
+    }
 }
 
 class Accounts
 {
     static void Main()
     {
-        BankAccount ba = new BankAccount(1, "owner01");
+        BankAccount ba = new BankAccount(1, "Nachman");
         Console.WriteLine(ba.ToString());
         ba.Deposit(13.3);
         ba.Withdraw(1.3);
         ba.PrintTransactionHistory();
         Console.WriteLine(ba.ToString());
+        BankAccount ba2 = new BankAccount(2, "Yosef", 112.12, "bool");
+        ba2.PrintTransactionHistory();
+        ba2.Deposit(6.69);
+        ba2.Withdraw(36.0);
+        ba2.PrintTransactionHistory();
+        Console.WriteLine(ba2.ToString());
+        BankAccount.Transfer(ba, ba2, 25);
+        Console.WriteLine(ba.ToString());
+        Console.WriteLine(ba2.ToString());
+
+
+
+
+
+        Console.ReadKey();
     }
 }
