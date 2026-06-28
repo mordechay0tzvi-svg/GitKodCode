@@ -27,7 +27,8 @@
         
         get => _accountType;
         set
-        {string normal = char.ToUpper(value[0]) + value.Substring(1).ToLower();
+        {if (string.IsNullOrWhiteSpace(value)){_accountType = "Checking";return;}
+        string normal = char.ToUpper(value[0]) + value.Substring(1).ToLower();
         if (!new[] { "Savings", "Checking", "Business" }.Contains(normal)){ _accountType = "Checking"; }
         else { _accountType = value; } }
     }
@@ -65,10 +66,7 @@
         Balance -= amount; _transactionHistory.Add($"Withdrowing ${amount} from account {AccountNumber}"); return true;
     }
 
-    public void ApplyInterest()
-    {
-        if (AccountType == "Savings") { Balance *= 1.02; }
-    }
+    public void ApplyInterest() { if (AccountType == "Savings") { Balance *= 1.02; } }
 
     public void PrintTransactionHistory() { foreach (string t in _transactionHistory) { Console.WriteLine(t); } }
 
@@ -84,26 +82,13 @@ class Accounts
 {
     static void Main()
     {
-        BankAccount ba = new BankAccount(1, "Nachman");
-        Console.WriteLine(ba.ToString());
-        ba.Deposit(13.3);
-        ba.Withdraw(1.3);
-        ba.PrintTransactionHistory();
-        Console.WriteLine(ba.ToString());
-        BankAccount ba2 = new BankAccount(2, "Yosef", 112.12, "bool");
-        ba2.PrintTransactionHistory();
-        ba2.Deposit(6.69);
-        ba2.Withdraw(36.0);
-        ba2.PrintTransactionHistory();
-        Console.WriteLine(ba2.ToString());
-        BankAccount.Transfer(ba, ba2, 25);
-        Console.WriteLine(ba.ToString());
-        Console.WriteLine(ba2.ToString());
-
-
-
-
-
+        List<BankAccount> bal = new List<BankAccount>();
+        bal.Add(new BankAccount(100, "", 100, "Savings"));
+        bal.Add(new BankAccount(101, "Haim Somer", 100, ""));
+        bal.Add(new BankAccount(102, "Yosef Havi", -100, "Checking"));
+        bal.Add(new BankAccount(103, "Moshe Shalom", 100, "Business"));
+        bal.Add(new BankAccount(104, "David Levi"));
+        foreach (BankAccount account in bal) {Console.WriteLine(account.ToString()); }
         Console.ReadKey();
     }
 }
