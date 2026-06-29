@@ -78,8 +78,8 @@ class Prog
             Console.WriteLine(obj.IsTrackable());
             Console.WriteLine(obj.StatusLine());
         }
+        Console.WriteLine("Press any key to exit.");
         Console.ReadKey();
-
     }
 }
 
