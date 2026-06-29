@@ -18,7 +18,7 @@
     }
     public abstract string StatusLine();
     public abstract bool IsTrackable();
-}
+  }
 
 class AirPlatform : Platform
 {
